@@ -38,7 +38,7 @@ public class NCP implements Application.ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (activity.getClass().getName().equals(NetCaptureRecordActivity.class.getName()) || !BuildConfig.DEBUG) {
+        if (activity.getClass().getName().equals(NetCaptureRecordActivity.class.getName()) || !isEnableActivityFloatView) {
             return;
         }
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
