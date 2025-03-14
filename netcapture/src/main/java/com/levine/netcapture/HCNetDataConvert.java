@@ -13,4 +13,6 @@ public interface HCNetDataConvert {
 
     String responseBody(String body);
 
+    boolean requestBodyNeedDecrypt();
+
 }

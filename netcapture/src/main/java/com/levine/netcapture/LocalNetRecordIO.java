@@ -156,8 +156,8 @@ public class LocalNetRecordIO {
             if (contentType != null) {
                 charset = Charset.forName("UTF-8");
             }
+            String paramsString = buffer.readString(charset);
             if (isPlaintext(buffer)) {
-                String paramsString = buffer.readString(charset);
                 String[] params = paramsString.split("&");
                 for (String item : params) {
                     String[] param = item.split("=");
@@ -184,6 +184,14 @@ public class LocalNetRecordIO {
             if (isPlaintext(buffer)) {
                 String string = buffer.readString(charset);
                 captureBean.getRequest().setRaw(string);
+            }
+
+            if (convert != null && convert.requestBodyNeedDecrypt()) {
+                // 此paramsString是加密的requestBody
+                CaptureBean.Data.RequestBean.ParameterBean parameterBean = new CaptureBean.Data.RequestBean.ParameterBean();
+                parameterBean.setKey("EncryptRequest");
+                parameterBean.setValue(paramsString);
+                captureBean.getRequest().getParameter().add(convert.requestParameters(parameterBean));
             }
         }
 
